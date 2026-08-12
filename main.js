@@ -58,6 +58,12 @@ const blogArticleView = document.getElementById("blogArticleView");
 const blogArticleContent = document.getElementById("blogArticleContent");
 const backToPostListBtn = document.getElementById("backToPostListBtn");
 
+// Privacy elements
+const privacySection = document.getElementById("privacy");
+const openPrivacyBtn = document.getElementById("openPrivacyBtn");
+const openPrivacyBtnEditor = document.getElementById("openPrivacyBtnEditor");
+const privacyBackBtn = document.getElementById("privacyBackBtn");
+
 // Core function to switch page views and update browser history
 export function navigateTo(targetView, updateHistory = true) {
   if (typeof window.clearDragClasses === "function") {
@@ -74,6 +80,9 @@ export function navigateTo(targetView, updateHistory = true) {
     blogSection.classList.add("active");
     renderBlogPosts();
     if (updateHistory) history.pushState({ view: "blog" }, "", "#blog");
+  } else if (targetView === "privacy") {
+    privacySection.classList.add("active");
+    if (updateHistory) history.pushState({ view: "privacy" }, "", "#privacy");
   } else {
     welcome.classList.add("active");
     if (updateHistory) history.pushState({ view: "welcome" }, "", "#welcome");
@@ -81,53 +90,17 @@ export function navigateTo(targetView, updateHistory = true) {
 }
 
 // Handle Browser Back & Forward Buttons
-window.addEventListener("popstate", (e) => {
+window.addEventListener("popstate", () => {
   const hash = window.location.hash.replace("#", "");
   if (hash === "editor") {
     navigateTo("editor", false);
   } else if (hash === "blog") {
     navigateTo("blog", false);
+  } else if (hash === "privacy") {
+    navigateTo("privacy", false);
   } else {
     navigateTo("welcome", false);
   }
-});
-
-// Render Blog Posts List
-function renderBlogPosts() {
-  if (!blogContainer) return;
-
-  blogContainer.innerHTML = blogPosts.map(post => `
-    <article class="blog-card" data-id="${post.id}" style="background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.25rem; cursor: pointer;">
-      <h3 style="margin: 0 0 0.5rem 0;">${post.title}</h3>
-      <small style="color: #666;">${post.date}</small>
-      <p style="margin: 0.5rem 0 0 0;">${post.excerpt}</p>
-    </article>
-  `).join("");
-}
-
-// Open Specific Article
-blogContainer?.addEventListener("click", (e) => {
-  const card = e.target.closest(".blog-card");
-  if (!card) return;
-
-  const post = blogPosts.find(p => p.id === card.dataset.id);
-  if (!post) return;
-
-  blogArticleContent.innerHTML = `
-    <h2>${post.title}</h2>
-    <small style="color: #666;">Published: ${post.date}</small>
-    <hr style="margin: 1rem 0; opacity: 0.3;" />
-    <div>${post.content}</div>
-  `;
-
-  blogListView.style.display = "none";
-  blogArticleView.style.display = "block";
-});
-
-// Article View Back Button
-backToPostListBtn?.addEventListener("click", () => {
-  blogArticleView.style.display = "none";
-  blogListView.style.display = "block";
 });
 
 // Attach Navigation Event Listeners
@@ -135,13 +108,21 @@ startBtn?.addEventListener("click", () => navigateTo("editor"));
 backBtn?.addEventListener("click", () => navigateTo("welcome"));
 openBlogBtn?.addEventListener("click", () => navigateTo("blog"));
 blogBackBtn?.addEventListener("click", () => navigateTo("welcome"));
+openPrivacyBtn?.addEventListener("click", () => navigateTo("privacy"));
+openPrivacyBtnEditor?.addEventListener("click", () => navigateTo("privacy"));
+privacyBackBtn?.addEventListener("click", () => navigateTo("welcome"));
 
 // Initialize route on page load
 document.addEventListener("DOMContentLoaded", () => {
   const initialHash = window.location.hash.replace("#", "");
   if (initialHash === "editor") navigateTo("editor", false);
   else if (initialHash === "blog") navigateTo("blog", false);
+  else if (initialHash === "privacy") navigateTo("privacy", false);
 });
+
+
+
+
 
 initPwaSupport();
 processingClient.warmup().catch((error) => {

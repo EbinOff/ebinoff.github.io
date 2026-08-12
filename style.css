@@ -1246,7 +1246,8 @@ body[style*="copy"] .is-reordering {
    BLOG SECTION & CARD STYLING
    ========================================= */
 
-#blog {
+#blog,
+#privacy {
   width: 100%;
 }
 

@@ -64,7 +64,7 @@
     </div>
 
     <footer class="welcome-footer">
-      <a href="./privacy.html" target="_blank" rel="noopener">Privacy Policy</a>
+      <button id="openPrivacyBtn" class="nav-link-btn" type="button">Privacy Policy</button>
       <button id="openBlogBtn" class="nav-link-btn" type="button"
         style="background: none; border: none; color: #4b64f2; text-decoration: underline; cursor: pointer;">Blog</button>
     </footer>
@@ -89,6 +89,33 @@
       <div id="blogArticleView" style="display: none; width: 100%; max-width: 800px; margin: 0 auto; text-align: left;">
         <button id="backToPostListBtn" class="action-btn" style="margin-bottom: 1rem;">← All Posts</button>
         <article id="blogArticleContent"></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRIVACY POLICY SECTION (FULL PAGE) -->
+  <section id="privacy" class="page">
+    <header class="topbar">
+      <button id="privacyBackBtn" class="icon-btn" title="Back to Welcome">←</button>
+      <h2>Privacy Policy</h2>
+    </header>
+
+    <div class="editor-body">
+      <div style="width: 100%; max-width: 800px; margin: 0 auto; text-align: left; padding: 2rem 1rem;">
+        <h2>Privacy Policy</h2>
+        <p><em>Last updated: August 2026</em></p>
+
+        <h3>1. Local Processing</h3>
+        <p>All image and PDF operations (resizing, compressing, converting) are performed locally inside your web
+          browser. Your files are never uploaded to any external server or cloud service.</p>
+
+        <h3>2. Data Retention</h3>
+        <p>Because processing happens entirely in memory on your device, no document data is collected, stored, or
+          transmitted by us.</p>
+
+        <h3>3. Advertisements</h3>
+        <p>We display third-party advertisements (such as Google AdSense) to support this free tool. Advertising vendors
+          may use cookies to serve ads based on prior visits to website pages.</p>
       </div>
     </div>
   </section>
@@ -168,7 +195,7 @@
       </div>
 
       <footer class="welcome-footer" style="text-align: center; margin-bottom: 20px;">
-        <a href="./privacy.html" target="_blank" rel="noopener">Privacy Policy</a>
+        <button id="openPrivacyBtnEditor" class="nav-link-btn" type="button">Privacy Policy</button>
       </footer>
     </div>
   </section>
