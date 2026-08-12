@@ -1243,44 +1243,6 @@ body[style*="copy"] .is-reordering {
 
 
 /* =========================================
-   PAGE LAYOUT & CENTERING FIXES
-   ========================================= */
-
-/* Hide inactive page sections cleanly */
-.page {
-  display: none !important;
-}
-
-/* Activate page sections using flexbox for perfect centering */
-.page.active {
-  display: flex !important;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  min-height: 100vh;
-  width: 100%;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-/* Ensure Welcome Section contents are centered */
-#welcome.page.active {
-  justify-content: center;
-  padding: 2rem 1rem;
-}
-
-/* Editor Body Container Centering */
-.editor-body {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem;
-}
-
-/* =========================================
    BLOG SECTION & CARD STYLING
    ========================================= */
 

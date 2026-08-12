@@ -43,21 +43,105 @@ const galleryExportProgressPercent = document.getElementById("galleryExportProgr
 const galleryExportProgressFill = document.getElementById("galleryExportProgressFill");
 const processingClient = createImageProcessingClient();
 
-// Function to activate the blog view
-function showBlog() {
+import { blogPosts } from "./blogData.js";
+
+/* =========================================
+   ROUTER & BROWSER HISTORY LOGIC
+   ========================================= */
+
+const blogSection = document.getElementById("blog");
+const openBlogBtn = document.getElementById("openBlogBtn");
+const blogBackBtn = document.getElementById("blogBackBtn");
+const blogContainer = document.getElementById("blogContainer");
+const blogListView = document.getElementById("blogListView");
+const blogArticleView = document.getElementById("blogArticleView");
+const blogArticleContent = document.getElementById("blogArticleContent");
+const backToPostListBtn = document.getElementById("backToPostListBtn");
+
+// Core function to switch page views and update browser history
+export function navigateTo(targetView, updateHistory = true) {
   if (typeof window.clearDragClasses === "function") {
     window.clearDragClasses();
   }
-  welcome.classList.remove("active");
-  editor.classList.remove("active");
-  blogSection.classList.add("active");
+
+  // Deactivate all sections
+  document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
+
+  if (targetView === "editor") {
+    editor.classList.add("active");
+    if (updateHistory) history.pushState({ view: "editor" }, "", "#editor");
+  } else if (targetView === "blog") {
+    blogSection.classList.add("active");
+    renderBlogPosts();
+    if (updateHistory) history.pushState({ view: "blog" }, "", "#blog");
+  } else {
+    welcome.classList.add("active");
+    if (updateHistory) history.pushState({ view: "welcome" }, "", "#welcome");
+  }
 }
 
-// Event Listener for the blog button
-const openBlogBtn = document.getElementById("openBlogBtn");
-if (openBlogBtn) {
-  openBlogBtn.addEventListener("click", showBlog);
+// Handle Browser Back & Forward Buttons
+window.addEventListener("popstate", (e) => {
+  const hash = window.location.hash.replace("#", "");
+  if (hash === "editor") {
+    navigateTo("editor", false);
+  } else if (hash === "blog") {
+    navigateTo("blog", false);
+  } else {
+    navigateTo("welcome", false);
+  }
+});
+
+// Render Blog Posts List
+function renderBlogPosts() {
+  if (!blogContainer) return;
+
+  blogContainer.innerHTML = blogPosts.map(post => `
+    <article class="blog-card" data-id="${post.id}" style="background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.25rem; cursor: pointer;">
+      <h3 style="margin: 0 0 0.5rem 0;">${post.title}</h3>
+      <small style="color: #666;">${post.date}</small>
+      <p style="margin: 0.5rem 0 0 0;">${post.excerpt}</p>
+    </article>
+  `).join("");
 }
+
+// Open Specific Article
+blogContainer?.addEventListener("click", (e) => {
+  const card = e.target.closest(".blog-card");
+  if (!card) return;
+
+  const post = blogPosts.find(p => p.id === card.dataset.id);
+  if (!post) return;
+
+  blogArticleContent.innerHTML = `
+    <h2>${post.title}</h2>
+    <small style="color: #666;">Published: ${post.date}</small>
+    <hr style="margin: 1rem 0; opacity: 0.3;" />
+    <div>${post.content}</div>
+  `;
+
+  blogListView.style.display = "none";
+  blogArticleView.style.display = "block";
+});
+
+// Article View Back Button
+backToPostListBtn?.addEventListener("click", () => {
+  blogArticleView.style.display = "none";
+  blogListView.style.display = "block";
+});
+
+// Attach Navigation Event Listeners
+startBtn?.addEventListener("click", () => navigateTo("editor"));
+backBtn?.addEventListener("click", () => navigateTo("welcome"));
+openBlogBtn?.addEventListener("click", () => navigateTo("blog"));
+blogBackBtn?.addEventListener("click", () => navigateTo("welcome"));
+
+// Initialize route on page load
+document.addEventListener("DOMContentLoaded", () => {
+  const initialHash = window.location.hash.replace("#", "");
+  if (initialHash === "editor") navigateTo("editor", false);
+  else if (initialHash === "blog") navigateTo("blog", false);
+});
 
 initPwaSupport();
 processingClient.warmup().catch((error) => {

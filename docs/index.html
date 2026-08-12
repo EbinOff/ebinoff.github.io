@@ -35,10 +35,10 @@
       }
     }
   </script>
-  <script type="module" crossorigin src="/assets/index-CatiywrW.js"></script>
+  <script type="module" crossorigin src="/assets/index-D8YGD-x0.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/vendor-DzkPlJsQ.js">
   <link rel="modulepreload" crossorigin href="/assets/pdfjs-xYRcKbug.js">
-  <link rel="stylesheet" crossorigin href="/assets/index-Biy9TP33.css">
+  <link rel="stylesheet" crossorigin href="/assets/index-CngvtX7K.css">
 </head>
 
 <body>
@@ -52,7 +52,7 @@
       No uploads. 100% private.
     </p>
     <div class="actions" style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
-      <button id="startBtn" class="big-btn">Start Editing</button>
+      <button id="startBtn" class="big-btn" style="font-size:medium;">Start Editing</button>
       <!-- INSTALL BUTTON (disabled — remove comments below to re-enable)
       <button id="installAppBtn" class="big-btn outline"
         style="display: none; background: #fff; color: #4b64f2; border: 2px solid #4b64f2;">Install as Native App</button>
@@ -68,26 +68,30 @@
 
     <footer class="welcome-footer">
       <a href="./privacy.html" target="_blank" rel="noopener">Privacy Policy</a>
-      <button id="openBlogBtn" class="nav-link-btn" type="button">Blog</button>
+      <button id="openBlogBtn" class="nav-link-btn" type="button"
+        style="background: none; border: none; color: #4b64f2; text-decoration: underline; cursor: pointer;">Blog</button>
     </footer>
   </section>
 
-  <!-- BLOG MODE -->
+  <!-- BLOG SECTION (FULL PAGE) -->
   <section id="blog" class="page">
     <header class="topbar">
-      <button id="blogBackToWelcome" class="icon-btn" title="Back">←</button>
+      <button id="blogBackBtn" class="icon-btn" title="Back to Welcome">←</button>
       <h2>Articles & Tutorials</h2>
     </header>
 
-    <div class="editor-body" style="max-width: 800px; margin: 0 auto; padding: 2rem 1rem;">
-      <div id="blogListView">
-        <h2>Latest Articles</h2>
-        <div id="blogList" style="margin-top: 1.5rem;"></div>
+    <div class="editor-body">
+      <!-- Article List View -->
+      <div id="blogListView" style="width: 100%; max-width: 800px; margin: 0 auto; text-align: left;">
+        <h2>Latest Blog Posts</h2>
+        <div id="blogContainer" class="blog-grid"
+          style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem;"></div>
       </div>
 
-      <div id="blogPostView" style="display: none;">
-        <button id="backToBlogList" class="action-btn" style="margin-bottom: 1rem;">← All Articles</button>
-        <article id="blogPostContent"></article>
+      <!-- Single Article Reading View -->
+      <div id="blogArticleView" style="display: none; width: 100%; max-width: 800px; margin: 0 auto; text-align: left;">
+        <button id="backToPostListBtn" class="action-btn" style="margin-bottom: 1rem;">← All Posts</button>
+        <article id="blogArticleContent"></article>
       </div>
     </div>
   </section>
