@@ -1255,6 +1255,9 @@ body[style*="copy"] .is-reordering {
 .page.active {
   display: block !important;
   align-self: center;
+  align-items: center;
+  align-content: center;
+  text-align: center;
 }
 
 /* Custom styling for the Blog Container */
