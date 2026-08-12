@@ -302,27 +302,31 @@ button {
 .thumb[data-type="image"] {
   min-width: 116px;
   max-width: 200px;
-  background: #d5d5d5 !important;/*E0E0E0*/
-  box-shadow: none !important; /* Remove outer shadow */
+  background: #d5d5d5 !important;
+  /*E0E0E0*/
+  box-shadow: none !important;
+  /* Remove outer shadow */
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: visible;       /* Ensure buttons don't get cut off */
+  overflow: visible;
+  /* Ensure buttons don't get cut off */
 }
 
-[data-theme="dark"] .thumb[data-type="image"]{
+[data-theme="dark"] .thumb[data-type="image"] {
   background: #4a4a4a !important;
 }
 
 /* 4. Hug the background and shadow tightly to the actual image */
 .thumb[data-type="image"] img {
-  width: auto;             /* Forces element to hug the image tightly */
+  width: auto;
+  /* Forces element to hug the image tightly */
   height: auto;
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
   border-radius: 8px;
-  background: var(--card); 
+  background: var(--card);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
@@ -335,16 +339,16 @@ button {
 .thumb[data-type="pdf"] {
   width: 168px;
   height: 140px;
-  background:  #E0E0E0 !important;
+  background: #E0E0E0 !important;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
-  overflow: hidden; 
+  overflow: hidden;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   position: relative;
 }
 
-[data-theme="dark"] .thumb[data-type="pdf"]{
+[data-theme="dark"] .thumb[data-type="pdf"] {
   background: #4a4a4a !important;
 }
 
@@ -352,7 +356,8 @@ button {
 .thumb[data-type="pdf"] canvas.pdf-preview {
   max-width: 100%;
   min-height: 100%;
-  object-fit: contain; /* Ensures the whole page fits without stretching */
+  object-fit: contain;
+  /* Ensures the whole page fits without stretching */
   display: block;
 }
 
@@ -378,14 +383,17 @@ button {
   left: 4px;
   width: 22px;
   height: 22px;
-  border-radius: 50%; /* Makes it perfectly round */
+  border-radius: 50%;
+  /* Makes it perfectly round */
   border: 2px solid rgba(255, 255, 255, 0.9);
-  background: rgba(0, 0, 0, 0.3); /* Translucent background */
-  opacity: 0; /* Hidden by default */
+  background: rgba(0, 0, 0, 0.3);
+  /* Translucent background */
+  opacity: 0;
+  /* Hidden by default */
   transition: all 0.2s ease;
   z-index: 5;
   cursor: pointer;
-  
+
   /* Flexbox centers the checkmark perfectly */
   display: flex;
   justify-content: center;
@@ -406,7 +414,8 @@ button {
 
 /* 4. Selected State: Solid Accent Color with Glow */
 .thumb.selected .select-box {
-  opacity: 1; /* Keep it permanently visible */
+  opacity: 1;
+  /* Keep it permanently visible */
   background: var(--accent);
   border-color: var(--accent);
   box-shadow: 0 0 8px var(--accent);
@@ -1031,22 +1040,24 @@ body[style*="copy"] .is-reordering {
   padding: 1px 4px;
   border-radius: 12px;
   z-index: 25;
-  pointer-events: auto; 
+  pointer-events: auto;
   backdrop-filter: blur(4px);
   letter-spacing: 0.5px;
   display: flex;
   align-items: center;
   gap: 2px;
-  transition: transform 0.2s ease-out; /* Added ease-out for smoother animation */
+  transition: transform 0.2s ease-out;
+  /* Added ease-out for smoother animation */
   white-space: nowrap;
-  
+
   /* FIX: Forces hardware acceleration so text doesn't jitter/shift during scale */
-  backface-visibility: hidden; 
+  backface-visibility: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
 .format-badge:hover {
-  transform: translateX(-50%) scale(1.05) translateZ(0); /* translateZ forces 3D rendering to prevent wobble */
+  transform: translateX(-50%) scale(1.05) translateZ(0);
+  /* translateZ forces 3D rendering to prevent wobble */
 }
 
 /* Recreates the classic solid color background just for the page number */
@@ -1055,15 +1066,17 @@ body[style*="copy"] .is-reordering {
   font-weight: bold;
   padding: 4px 4px;
   border-radius: 10px;
-  
+
   /* FIX: Perfectly centers the number vertically and horizontally */
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1; /* Removes invisible top/bottom font spacing */
-  
+  line-height: 1;
+  /* Removes invisible top/bottom font spacing */
+
   /* Pulls the colored block flush with the left side of the pill */
-  margin-left: -4px; /* Set to -4px to perfectly offset the parent's 4px left padding */
+  margin-left: -4px;
+  /* Set to -4px to perfectly offset the parent's 4px left padding */
   margin-top: -2px;
   margin-bottom: -2px;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
@@ -1076,6 +1089,7 @@ body[style*="copy"] .is-reordering {
   border-color: var(--accent);
   box-shadow: 0 0 8px var(--accent);
 }
+
 .thumb.temp-visual-select .select-box::after {
   content: '✓';
   color: white;
@@ -1086,32 +1100,36 @@ body[style*="copy"] .is-reordering {
 /* Temporary visual selection for Brand New Copies (Gold/Yellow) */
 .thumb.temp-new-select .select-box {
   opacity: 1;
-  background: #ffc107; /* Warning yellow */
+  background: #ffc107;
+  /* Warning yellow */
   border-color: #ffc107;
   box-shadow: 0 0 12px #ffc107;
 }
+
 .thumb.temp-new-select .select-box::after {
   content: '✓';
-  color: #000; /* Black text for contrast */
+  color: #000;
+  /* Black text for contrast */
   font-size: 14px;
   font-weight: bold;
 }
 
 /* Yellow Override for Brand New Files */
 .thumb.is-new-copy.selected {
-    /* If you have a blue border on selected thumbs, this turns it yellow */
-    border-color: #ffc107 !important; 
-    box-shadow: 0 0 0 3px #ffc107 !important; 
+  /* If you have a blue border on selected thumbs, this turns it yellow */
+  border-color: #ffc107 !important;
+  box-shadow: 0 0 0 3px #ffc107 !important;
 }
 
 .thumb.is-new-copy.selected .select-box {
-    background: #ffc107 !important;
-    border-color: #ffc107 !important;
-    box-shadow: 0 0 8px #ffc107 !important;
+  background: #ffc107 !important;
+  border-color: #ffc107 !important;
+  box-shadow: 0 0 8px #ffc107 !important;
 }
 
 .thumb.is-new-copy.selected .select-box::after {
-    color: #000 !important; /* Black checkmark for contrast */
+  color: #000 !important;
+  /* Black checkmark for contrast */
 }
 
 
@@ -1222,3 +1240,34 @@ body[style*="copy"] .is-reordering {
   text-decoration: underline;
 }
 
+
+
+/* =========================================
+   PAGE SECTION VISIBILITY
+   ========================================= */
+
+/* Hide all page sections by default */
+.page {
+  display: none !important;
+}
+
+/* Show only the active section */
+.page.active {
+  display: block !important;
+}
+
+/* Custom styling for the Blog Container */
+#blog .editor-body {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.blog-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
