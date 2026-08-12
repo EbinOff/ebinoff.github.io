@@ -43,6 +43,22 @@ const galleryExportProgressPercent = document.getElementById("galleryExportProgr
 const galleryExportProgressFill = document.getElementById("galleryExportProgressFill");
 const processingClient = createImageProcessingClient();
 
+// Function to activate the blog view
+function showBlog() {
+  if (typeof window.clearDragClasses === "function") {
+    window.clearDragClasses();
+  }
+  welcome.classList.remove("active");
+  editor.classList.remove("active");
+  blogSection.classList.add("active");
+}
+
+// Event Listener for the blog button
+const openBlogBtn = document.getElementById("openBlogBtn");
+if (openBlogBtn) {
+  openBlogBtn.addEventListener("click", showBlog);
+}
+
 initPwaSupport();
 processingClient.warmup().catch((error) => {
   console.warn("Image processing worker warmup skipped:", error);
