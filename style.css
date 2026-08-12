@@ -1254,6 +1254,7 @@ body[style*="copy"] .is-reordering {
 /* Show only the active section */
 .page.active {
   display: block !important;
+  align-self: center;
 }
 
 /* Custom styling for the Blog Container */
