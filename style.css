@@ -1243,35 +1243,93 @@ body[style*="copy"] .is-reordering {
 
 
 /* =========================================
-   PAGE SECTION VISIBILITY
+   PAGE LAYOUT & CENTERING FIXES
    ========================================= */
 
-/* Hide all page sections by default */
+/* Hide inactive page sections cleanly */
 .page {
   display: none !important;
 }
 
-/* Show only the active section */
+/* Activate page sections using flexbox for perfect centering */
 .page.active {
-  display: block !important;
-  align-self: center;
+  display: flex !important;
+  flex-direction: column;
   align-items: center;
-  align-content: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
   text-align: center;
 }
 
-/* Custom styling for the Blog Container */
-#blog .editor-body {
-  max-width: 800px;
-  margin: 0 auto;
+/* Ensure Welcome Section contents are centered */
+#welcome.page.active {
+  justify-content: center;
   padding: 2rem 1rem;
 }
 
+/* Editor Body Container Centering */
+.editor-body {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+/* =========================================
+   BLOG SECTION & CARD STYLING
+   ========================================= */
+
+#blog {
+  width: 100%;
+}
+
+#blogListView,
+#blogPostView {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
+  /* Keeps article text readable */
+}
+
+/* Blog Cards styling for centered feed */
 .blog-card {
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color, #e0e0e0);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
 }
 
 .blog-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation Footer Links */
+.welcome-footer {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.welcome-footer a,
+.welcome-footer button.nav-link-btn {
+  background: none;
+  border: none;
+  color: var(--primary-color, #4b64f2);
+  font-size: 1rem;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
 }
