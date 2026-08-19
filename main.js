@@ -49,77 +49,77 @@ import { blogPosts } from "./blogData.js";
    ROUTER & BROWSER HISTORY LOGIC
    ========================================= */
 
-const blogSection = document.getElementById("blog");
-const openBlogBtn = document.getElementById("openBlogBtn");
-const blogBackBtn = document.getElementById("blogBackBtn");
-const blogContainer = document.getElementById("blogContainer");
-const blogListView = document.getElementById("blogListView");
-const blogArticleView = document.getElementById("blogArticleView");
-const blogArticleContent = document.getElementById("blogArticleContent");
-const backToPostListBtn = document.getElementById("backToPostListBtn");
+// Render Blog Posts List
+function renderBlogPosts() {
+  const blogContainer = document.getElementById("blogContainer");
+  if (!blogContainer) return;
 
-// Privacy elements
-const privacySection = document.getElementById("privacy");
-const openPrivacyBtn = document.getElementById("openPrivacyBtn");
-const openPrivacyBtnEditor = document.getElementById("openPrivacyBtnEditor");
-const privacyBackBtn = document.getElementById("privacyBackBtn");
+  blogContainer.innerHTML = blogPosts.map(post => `
+    <article class="blog-card" data-id="${post.id}" style="background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.25rem; cursor: pointer;">
+      <h3 style="margin: 0 0 0.5rem 0;">${post.title}</h3>
+      <small style="color: #666;">${post.date}</small>
+      <p style="margin: 0.5rem 0 0 0;">${post.excerpt}</p>
+    </article>
+  `).join("");
+}
 
-// Core function to switch page views and update browser history
-export function navigateTo(targetView, updateHistory = true) {
+// Core function to switch views based on route name
+export function navigateTo(targetView) {
   if (typeof window.clearDragClasses === "function") {
     window.clearDragClasses();
   }
 
-  // Deactivate all sections
+  // 1. Update the URL Address Bar directly
+  if (window.location.hash !== `#${targetView}`) {
+    window.location.hash = targetView;
+  }
+
+  // 2. Hide all page sections
   document.querySelectorAll(".page").forEach(page => page.classList.remove("active"));
 
-  if (targetView === "editor") {
+  // 3. Activate the target section
+  const welcome = document.getElementById("welcome");
+  const editor = document.getElementById("editor");
+  const blogSection = document.getElementById("blog");
+  const blogListView = document.getElementById("blogListView");
+  const blogArticleView = document.getElementById("blogArticleView");
+
+  if (targetView === "editor" && editor) {
     editor.classList.add("active");
-    if (updateHistory) history.pushState({ view: "editor" }, "", "#editor");
-  } else if (targetView === "blog") {
+  } else if (targetView === "blog" && blogSection) {
     blogSection.classList.add("active");
+    if (blogListView && blogArticleView) {
+      blogListView.style.display = "block";
+      blogArticleView.style.display = "none";
+    }
     renderBlogPosts();
-    if (updateHistory) history.pushState({ view: "blog" }, "", "#blog");
-  } else if (targetView === "privacy") {
-    privacySection.classList.add("active");
-    if (updateHistory) history.pushState({ view: "privacy" }, "", "#privacy");
-  } else {
+  } else if (welcome) {
     welcome.classList.add("active");
-    if (updateHistory) history.pushState({ view: "welcome" }, "", "#welcome");
+  }
+
+  if (typeof refreshAdSense === "function") {
+    refreshAdSense();
   }
 }
 
-// Handle Browser Back & Forward Buttons
-window.addEventListener("popstate", () => {
-  const hash = window.location.hash.replace("#", "");
-  if (hash === "editor") {
-    navigateTo("editor", false);
-  } else if (hash === "blog") {
-    navigateTo("blog", false);
-  } else if (hash === "privacy") {
-    navigateTo("privacy", false);
-  } else {
-    navigateTo("welcome", false);
-  }
+// Handle Hash Changes (Triggered on click & Browser Back/Forward)
+window.addEventListener("hashchange", () => {
+  const route = window.location.hash.replace("#", "") || "welcome";
+  navigateTo(route);
 });
 
-// Attach Navigation Event Listeners
-startBtn?.addEventListener("click", () => navigateTo("editor"));
-backBtn?.addEventListener("click", () => navigateTo("welcome"));
-openBlogBtn?.addEventListener("click", () => navigateTo("blog"));
-blogBackBtn?.addEventListener("click", () => navigateTo("welcome"));
-openPrivacyBtn?.addEventListener("click", () => navigateTo("privacy"));
-openPrivacyBtnEditor?.addEventListener("click", () => navigateTo("privacy"));
-privacyBackBtn?.addEventListener("click", () => navigateTo("welcome"));
-
-// Initialize route on page load
+// Bind all button clicks reliably inside DOMContentLoaded
 document.addEventListener("DOMContentLoaded", () => {
-  const initialHash = window.location.hash.replace("#", "");
-  if (initialHash === "editor") navigateTo("editor", false);
-  else if (initialHash === "blog") navigateTo("blog", false);
-  else if (initialHash === "privacy") navigateTo("privacy", false);
-});
+  // Bind buttons
+  document.getElementById("startBtn")?.addEventListener("click", () => navigateTo("editor"));
+  document.getElementById("backBtn")?.addEventListener("click", () => navigateTo("welcome"));
+  document.getElementById("openBlogBtn")?.addEventListener("click", () => navigateTo("blog"));
+  document.getElementById("blogBackBtn")?.addEventListener("click", () => navigateTo("welcome"));
 
+  // Read current URL hash on initial page load / reload
+  const initialRoute = window.location.hash.replace("#", "") || "welcome";
+  navigateTo(initialRoute);
+});
 
 
 

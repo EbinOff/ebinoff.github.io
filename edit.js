@@ -56,6 +56,15 @@ let isRatioLocked = true;
 let origImgW = 0, origImgH = 0;
 const processingClient = createImageProcessingClient();
 
+function debounce(func, wait) {
+    let timeout;
+    return function (...args) {
+        const context = this;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), wait);
+    };
+}
+
 processingClient.warmup().catch((error) => {
     console.warn("Editor worker warmup skipped:", error);
 });
@@ -2485,7 +2494,8 @@ function setupNavigation(isPdf) {
         }
     };
 
-    slider.oninput = () => scrollToPage(parseInt(slider.value), "auto", true);
+    const debouncedScrollToPage = debounce((pageIdx) => scrollToPage(pageIdx, "auto", true), 40);
+    slider.oninput = () => debouncedScrollToPage(parseInt(slider.value));
 
     btnPrev.onclick = (e) => {
         e.preventDefault();
@@ -3790,6 +3800,8 @@ window.setupResizeTool = () => {
         updateToolInfo();
     };
 
+    const debouncedApplyResizePreview = debounce(applyResizePreview, 60);
+
     if (resizeToolbar) resizeToolbar.style.display = "none";
 
     if (btnResizeTrigger) {
@@ -3879,7 +3891,7 @@ window.setupResizeTool = () => {
             resizeScaleValue.innerText = `${e.target.value}%`;
             resizeW.value = Math.max(1, Math.round(origImgW * scale));
             resizeH.value = Math.max(1, Math.round(origImgH * scale));
-            applyResizePreview();
+            debouncedApplyResizePreview();
         };
 
         resizeW.oninput = (e) => {
@@ -3892,7 +3904,7 @@ window.setupResizeTool = () => {
                 resizeScale.value = scale;
                 resizeScaleValue.innerText = `${scale}%`;
             }
-            applyResizePreview();
+            debouncedApplyResizePreview();
         };
 
         resizeH.oninput = (e) => {
@@ -3905,7 +3917,7 @@ window.setupResizeTool = () => {
                 resizeScale.value = scale;
                 resizeScaleValue.innerText = `${scale}%`;
             }
-            applyResizePreview();
+            debouncedApplyResizePreview();
         };
 
         if (btnLockRatio) {
@@ -4302,9 +4314,11 @@ window.setupCompressTool = () => {
         updateToolInfo();
     };
 
+    const debouncedApplyCompressPreview = debounce(applyCompressPreview, 60);
+
     compressQuality.oninput = function () {
         syncCompressQualityLabel();
-        applyCompressPreview();
+        debouncedApplyCompressPreview();
     };
 
     // When dropdown preset is selected, adjust slider to match
