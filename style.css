@@ -505,9 +505,9 @@ button {
 }
 
 .drop-hint {
-  margin-top: 48px;
+  margin-top: 40px;
   /*120px*/
-  margin-bottom: 48px;
+  margin-bottom: 56px;
   /*no margin bottom*/
   padding: 28px 200px;
   border: 2px dashed var(--accent);
