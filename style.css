@@ -1144,7 +1144,7 @@ body[style*="copy"] .is-reordering {
 
 
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .drop-hint {
     padding: 20px 24px;
   }
@@ -1152,6 +1152,44 @@ body[style*="copy"] .is-reordering {
   .drop-text {
     min-width: 180px;
     font-size: 13px;
+  }
+
+  /* Mobile Gallery Larger Thumbnails & Touch Targets */
+  .gallery {
+    gap: 10px;
+    padding: 6px 8px;
+    justify-content: space-around;
+  }
+
+  .thumb {
+    height: 175px !important;
+  }
+
+  .thumb[data-type="image"] {
+    min-width: 140px !important;
+    height: 175px !important;
+    flex: 1 1 calc(50% - 10px) !important;
+    max-width: calc(50% - 5px) !important;
+  }
+
+  .thumb[data-type="pdf"] {
+    width: calc(50% - 5px) !important;
+    height: 175px !important;
+    min-width: 140px !important;
+  }
+
+  .move-btn, .copy-action-btn, .pdf-menu-btn, .thumb-btn {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    touch-action: manipulation;
+  }
+
+  .thumb .select-box {
+    opacity: 1 !important;
+    width: 26px !important;
+    height: 26px !important;
   }
 }
 

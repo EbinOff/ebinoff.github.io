@@ -2345,26 +2345,37 @@ async function renderPdfContent(pdfDoc) {
     slider.max = totalPages - 1;
     for (let i = 0; i < totalPages; i++) addPageSkeleton(i, true);
 
-    const renderQueue = async (i) => {
-        if (i >= totalPages) return;
+    const isMobile = window.innerWidth <= 600 || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const pixelRatio = window.devicePixelRatio || 1;
+    const renderScale = isMobile ? Math.min(1.5, pixelRatio) : Math.min(2.0 * pixelRatio, 3.0);
+    const jpegQuality = isMobile ? 0.88 : 0.95;
+
+    const renderSinglePage = async (pageIdx) => {
         try {
-            const page = await pdfDoc.getPage(i + 1);
-
-            // FIX: Use device pixel ratio for Retina/High-Res screens, base scale of 2
-            const pixelRatio = window.devicePixelRatio || 1;
-            const viewport = page.getViewport({ scale: 2.0 * pixelRatio });
-
+            const page = await pdfDoc.getPage(pageIdx + 1);
+            const viewport = page.getViewport({ scale: renderScale });
             const canvas = document.createElement("canvas");
             canvas.width = viewport.width; canvas.height = viewport.height;
             await page.render({ canvasContext: canvas.getContext("2d"), viewport }).promise;
 
-            // FIX: 1.0 Quality for crystal clear text!
-            const src = canvas.toDataURL("image/jpeg", 1.0);
-            fillPageContent(src, i, true);
+            const src = canvas.toDataURL("image/jpeg", jpegQuality);
+            fillPageContent(src, pageIdx, true);
         } catch (e) { console.error(e); }
-        requestAnimationFrame(() => renderQueue(i + 1));
     };
-    renderQueue(0);
+
+    // Render active page immediately first for instant preview response
+    const startIdx = Math.max(0, Math.min(activeIndex, totalPages - 1));
+    await renderSinglePage(startIdx);
+
+    // Then render remaining pages asynchronously with UI yields
+    const renderRemaining = async (i) => {
+        if (i >= totalPages) return;
+        if (i !== startIdx) {
+            await renderSinglePage(i);
+        }
+        setTimeout(() => renderRemaining(i + 1), 10);
+    };
+    renderRemaining(0);
 }
 
 // Disables all toolbar buttons except the close button
