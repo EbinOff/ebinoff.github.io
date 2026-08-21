@@ -106,6 +106,10 @@ export async function openImageModal(urlOrData, isPdf = false, originalThumb = n
     setupCropTool();
     setupExportHandler();
 
+    // Show modal immediately for instant user feedback
+    modal.classList.add("active");
+    if (resizeObserver) resizeObserver.observe(carousel);
+
     // Load Content
     if (isPdf) {
         // 1. Save it to our global variable so the rest of the app can use it
@@ -131,11 +135,6 @@ export async function openImageModal(urlOrData, isPdf = false, originalThumb = n
     if (!isBatchImageSession && originalThumb && originalThumb._editorState) {
         restoreState(originalThumb._editorState);
     }
-
-    modal.classList.add("active");
-
-    // Activate Observer to keep image centered during layout changes
-    if (resizeObserver) resizeObserver.observe(carousel);
 
     setTimeout(() => updateNav(isPdf || isBatchImageSession), 50);
 }
@@ -2347,8 +2346,8 @@ async function renderPdfContent(pdfDoc) {
 
     const isMobile = window.innerWidth <= 600 || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     const pixelRatio = window.devicePixelRatio || 1;
-    const renderScale = isMobile ? Math.min(1.5, pixelRatio) : Math.min(2.0 * pixelRatio, 3.0);
-    const jpegQuality = isMobile ? 0.88 : 0.95;
+    const renderScale = isMobile ? Math.min(1.25, pixelRatio) : Math.min(1.5 * pixelRatio, 2.0);
+    const jpegQuality = isMobile ? 0.85 : 0.90;
 
     const renderSinglePage = async (pageIdx) => {
         try {
@@ -2358,7 +2357,8 @@ async function renderPdfContent(pdfDoc) {
             canvas.width = viewport.width; canvas.height = viewport.height;
             await page.render({ canvasContext: canvas.getContext("2d"), viewport }).promise;
 
-            const src = canvas.toDataURL("image/jpeg", jpegQuality);
+            const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", jpegQuality));
+            const src = blob ? URL.createObjectURL(blob) : canvas.toDataURL("image/jpeg", jpegQuality);
             fillPageContent(src, pageIdx, true);
         } catch (e) { console.error(e); }
     };
@@ -3477,12 +3477,11 @@ async function renderPdfGrid(pdfDoc) {
 
             const thumbImg = document.createElement("img");
             thumbImg.className = "film-thumb";
-            // Instantly clone the painted canvas as an image!
-            thumbImg.src = canvas.toDataURL();
+            // Lightweight JPEG format for fast encoding
+            thumbImg.src = canvas.toDataURL("image/jpeg", 0.7);
 
             wrapper.appendChild(thumbImg);
 
-            // Allow clicking the filmstrip thumbnail to jump to that page
             // Allow clicking the filmstrip thumbnail to jump to that page
             wrapper.onclick = () => {
                 scrollToPage(i - 1, "smooth", true);
@@ -3490,6 +3489,9 @@ async function renderPdfGrid(pdfDoc) {
 
             filmstrip.appendChild(wrapper);
         }
+
+        // Yield CPU to main thread so UI stays 60fps responsive
+        await new Promise((resolve) => setTimeout(resolve, 0));
 
         // ==========================================
         // BUILD THE GRID ITEM
