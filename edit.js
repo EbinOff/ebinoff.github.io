@@ -110,6 +110,11 @@ export async function openImageModal(urlOrData, isPdf = false, originalThumb = n
     modal.classList.add("active");
     if (resizeObserver) resizeObserver.observe(carousel);
 
+    // Restore Session BEFORE loading content so activeIndex & editState are set up
+    if (!isBatchImageSession && originalThumb && originalThumb._editorState) {
+        restoreState(originalThumb._editorState);
+    }
+
     // Load Content
     if (isPdf) {
         // 1. Save it to our global variable so the rest of the app can use it
@@ -129,11 +134,6 @@ export async function openImageModal(urlOrData, isPdf = false, originalThumb = n
     } else {
         currentPdfDoc = null;
         renderImageContent(urlOrData, originalThumb);
-    }
-
-    // Restore Session
-    if (!isBatchImageSession && originalThumb && originalThumb._editorState) {
-        restoreState(originalThumb._editorState);
     }
 
     setTimeout(() => updateNav(isPdf || isBatchImageSession), 50);
@@ -2366,6 +2366,7 @@ async function renderPdfContent(pdfDoc) {
     // Render active page immediately first for instant preview response
     const startIdx = Math.max(0, Math.min(activeIndex, totalPages - 1));
     await renderSinglePage(startIdx);
+    scrollToPage(startIdx, "auto", true);
 
     // Then render remaining pages asynchronously with UI yields
     const renderRemaining = async (i) => {
