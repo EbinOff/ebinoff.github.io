@@ -110,11 +110,6 @@ export async function openImageModal(urlOrData, isPdf = false, originalThumb = n
     modal.classList.add("active");
     if (resizeObserver) resizeObserver.observe(carousel);
 
-    // Restore Session BEFORE loading content so activeIndex & editState are set up
-    if (!isBatchImageSession && originalThumb && originalThumb._editorState) {
-        restoreState(originalThumb._editorState);
-    }
-
     // Load Content
     if (isPdf) {
         // 1. Save it to our global variable so the rest of the app can use it
@@ -421,9 +416,11 @@ function initModalDOM() {
             <button class="modal-btn small-btn btn-accent" id="btnFlipV" title="Flip Vertical">${iconFlipV}</button>
           </div>
 
+          <div class="sidebar-primary-tools">
             <button class="modal-btn" id="btnCrop">Crop</button>
             <button class="modal-btn" id="btnResize">Resize</button>
             <button class="modal-btn" id="btnCompress">Compress</button>
+          </div>
         </div>
 
         <div class="sidebar-spacer"></div>
@@ -2368,13 +2365,13 @@ async function renderPdfContent(pdfDoc) {
     await renderSinglePage(startIdx);
     scrollToPage(startIdx, "auto", true);
 
-    // Then render remaining pages asynchronously with UI yields
     const renderRemaining = async (i) => {
-        if (i >= totalPages) return;
-        if (i !== startIdx) {
-            await renderSinglePage(i);
+        if (i < totalPages) {
+            if (i !== startIdx) {
+                await renderSinglePage(i);
+            }
+            setTimeout(() => renderRemaining(i + 1), 10);
         }
-        setTimeout(() => renderRemaining(i + 1), 10);
     };
     renderRemaining(0);
 }

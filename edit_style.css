@@ -426,6 +426,12 @@
   gap: 8px;
 }
 
+.sidebar-primary-tools {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 /* Buttons */
 .modal-btn {
   width: 100%;
@@ -1584,7 +1590,7 @@
   transform: none;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   /* Full screen modal overlay & container with column layout */
   .image-modal-overlay {
     padding: 0 !important;
@@ -1599,11 +1605,16 @@
     flex-direction: column !important;
   }
 
-  /* Main Canvas/Image View gets remaining height at top */
+  /* Main Canvas/Image View gets remaining height at top and maximum horizontal space */
   .modal-view {
     flex: 1 1 auto !important;
     min-height: 0 !important;
     width: 100% !important;
+  }
+
+  .editor-page img {
+    max-width: 96% !important;
+    max-height: 96% !important;
   }
 
   /* Header actions (Undo, Save, Close) single row non-overflowing */
@@ -1649,7 +1660,7 @@
     flex-shrink: 0 !important;
   }
 
-  /* Sidebar positioned at bottom below image preview */
+  /* Sidebar positioned at bottom below image preview area */
   .modal-sidebar {
     width: 100% !important;
     height: auto !important;
@@ -1661,6 +1672,15 @@
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
     flex-shrink: 0 !important;
+  }
+
+  .modal-sidebar.collapsed {
+    height: 0 !important;
+    max-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    overflow: hidden !important;
   }
 
   .sidebar-spacer {
@@ -1678,6 +1698,13 @@
     gap: 6px !important;
   }
 
+  .sidebar-primary-tools {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
+
   .sidebar-row {
     gap: 6px !important;
   }
@@ -1685,6 +1712,25 @@
   .sidebar-top-row {
     gap: 6px !important;
     margin-bottom: 6px !important;
+  }
+
+  .sidebar-footer {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    margin-top: 4px !important;
+  }
+
+  #editorInfo {
+    text-align: left !important;
+  }
+
+  #exportBtnMain {
+    width: auto !important;
+    min-width: 100px !important;
+    padding: 8px 16px !important;
   }
 
   .modal-btn, .small-btn, .tool-nav-btn {
