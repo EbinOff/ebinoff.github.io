@@ -1226,7 +1226,7 @@ body[style*="copy"] .is-reordering {
 }
 
 .welcome-ad {
-  max-width: 480px;
+  max-width: 900px;
   margin-top: 24px;
 }
 
@@ -1263,6 +1263,47 @@ body[style*="copy"] .is-reordering {
   font-weight: 500;
   color: var(--fg);
   opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .adsense-container {
+    padding: 4px 8px !important;
+    margin: 8px auto !important;
+    max-height: 55px !important;
+    overflow: hidden !important;
+  }
+
+  .ad-label {
+    font-size: 9px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .adsbygoogle[data-ad-status="unfilled"],
+  .adsbygoogle:empty {
+    min-height: 45px !important;
+    height: 45px !important;
+  }
+
+  .adsbygoogle {
+    max-height: 45px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .adsbygoogle iframe,
+  .adsbygoogle ins,
+  .adsbygoogle img,
+  .adsbygoogle canvas {
+    max-height: 45px !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+  }
+
+  .adsbygoogle:empty::before {
+    font-size: 10px !important;
+  }
 }
 
 .welcome-footer {
@@ -1323,7 +1364,7 @@ body[style*="copy"] .is-reordering {
   gap: 1.5rem;
   justify-content: center;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 0rem;
   padding: 1rem;
 }
 
