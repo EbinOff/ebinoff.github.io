@@ -116,6 +116,14 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("openBlogBtn")?.addEventListener("click", () => navigateTo("blog"));
   document.getElementById("blogBackBtn")?.addEventListener("click", () => navigateTo("welcome"));
 
+  // Privacy Policy Links
+  document.getElementById("openPrivacyBtn")?.addEventListener("click", () => {
+    window.location.href = "privacy.html";
+  });
+  document.getElementById("openPrivacyBtnEditor")?.addEventListener("click", () => {
+    window.location.href = "privacy.html";
+  });
+
   // Read current URL hash on initial page load / reload
   const initialRoute = window.location.hash.replace("#", "") || "welcome";
   navigateTo(initialRoute);
