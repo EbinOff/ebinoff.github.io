@@ -1820,6 +1820,15 @@ function setupCropDrag(overlay, img, actionsBar) {
 
     overlay.onmousedown = (e) => {
         e.stopPropagation();
+        handleMouseDown(e);
+    };
+
+    overlay.ontouchstart = (e) => {
+        e.stopPropagation();
+        handleMouseDown(e.touches[0]);
+    };
+
+    function handleMouseDown(e) {
         const handle = e.target.closest(".crop-handle");
 
         startX = e.clientX;
@@ -1844,11 +1853,16 @@ function setupCropDrag(overlay, img, actionsBar) {
 
         document.addEventListener("mousemove", onMove);
         document.addEventListener("mouseup", onUp);
-    };
+        document.addEventListener("touchmove", onTouchMove, { passive: false });
+        document.addEventListener("touchend", onUp);
+    }
+
+    function onTouchMove(e) {
+        if (e.cancelable) e.preventDefault();
+        onMove(e.touches[0]);
+    }
 
     function onMove(e) {
-        e.preventDefault();
-
         const dx = e.clientX - startX;
         const dy = e.clientY - startY;
 
@@ -1891,6 +1905,8 @@ function setupCropDrag(overlay, img, actionsBar) {
         draggingHandle = null;
         document.removeEventListener("mousemove", onMove);
         document.removeEventListener("mouseup", onUp);
+        document.removeEventListener("touchmove", onTouchMove);
+        document.removeEventListener("touchend", onUp);
     }
 }
 
