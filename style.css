@@ -1269,7 +1269,7 @@ body[style*="copy"] .is-reordering {
   .adsense-container {
     padding: 4px 8px !important;
     margin: 8px auto !important;
-    max-height: 110px !important;
+    max-height: 80px !important;
     overflow: hidden !important;
   }
 
