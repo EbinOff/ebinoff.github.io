@@ -1939,12 +1939,13 @@ document.addEventListener("drop", () => {
 function enforceMobileAdCaps() {
   if (window.innerWidth <= 768) {
     document.querySelectorAll(".adsense-container, ins.adsbygoogle").forEach((el) => {
-      el.style.setProperty("max-height", "55px", "important");
+      el.style.setProperty("max-height", "110px", "important");
+      el.style.setProperty("height", "110px", "important");
       el.style.setProperty("overflow", "hidden", "important");
     });
     document.querySelectorAll(".adsense-container iframe, ins.adsbygoogle iframe").forEach((iframe) => {
-      iframe.style.setProperty("max-height", "40px", "important");
-      iframe.style.setProperty("height", "40px", "important");
+      iframe.style.setProperty("max-height", "90px", "important");
+      iframe.style.setProperty("height", "90px", "important");
     });
   }
 }
