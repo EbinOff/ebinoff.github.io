@@ -1267,42 +1267,30 @@ body[style*="copy"] .is-reordering {
 
 @media (max-width: 768px) {
   .adsense-container {
-    padding: 4px 8px !important;
+    padding: 5px 8px !important;
     margin: 8px auto !important;
-    max-height: 55px !important;
-    overflow: hidden !important;
+    max-height: 110px !important;
   }
 
   .ad-label {
-    font-size: 9px !important;
+    font-size: 8px !important;
+    letter-spacing: 0.5px !important;
     margin-bottom: 2px !important;
   }
 
   .adsbygoogle[data-ad-status="unfilled"],
-  .adsbygoogle:empty {
+  .adsbygoogle:empty,
+  ins.adsbygoogle {
     min-height: 45px !important;
-    height: 45px !important;
+    max-height: 100px !important;
   }
 
-  .adsbygoogle {
-    max-height: 45px !important;
-    overflow: hidden !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-
-  .adsbygoogle iframe,
-  .adsbygoogle ins,
-  .adsbygoogle img,
-  .adsbygoogle canvas {
-    max-height: 45px !important;
+  .adsense-container iframe,
+  ins.adsbygoogle iframe {
     max-width: 100% !important;
+    max-height: 100% !important;
     object-fit: contain !important;
-  }
-
-  .adsbygoogle:empty::before {
-    font-size: 10px !important;
+    transform-origin: top center;
   }
 }
 
