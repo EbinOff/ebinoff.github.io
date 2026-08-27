@@ -1266,31 +1266,51 @@ body[style*="copy"] .is-reordering {
 }
 
 @media (max-width: 768px) {
-  .adsense-container {
-    padding: 5px 8px !important;
+  .adsense-container,
+  .welcome-ad,
+  .editor-top-ad,
+  .editor-bottom-ad {
+    padding: 4px 8px !important;
     margin: 8px auto !important;
-    max-height: 110px !important;
+    max-height: 55px !important;
+    height: auto !important;
+    overflow: hidden !important;
   }
 
   .ad-label {
     font-size: 8px !important;
-    letter-spacing: 0.5px !important;
     margin-bottom: 2px !important;
+    letter-spacing: 0.5px !important;
+    line-height: 1 !important;
   }
 
+  .adsbygoogle,
+  ins.adsbygoogle,
+  ins.adsbygoogle[style],
   .adsbygoogle[data-ad-status="unfilled"],
-  .adsbygoogle:empty,
-  ins.adsbygoogle {
-    min-height: 45px !important;
-    max-height: 100px !important;
+  .adsbygoogle:empty {
+    min-height: 35px !important;
+    height: 40px !important;
+    max-height: 40px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
-  .adsense-container iframe,
-  ins.adsbygoogle iframe {
+  .adsbygoogle iframe,
+  ins.adsbygoogle iframe,
+  ins.adsbygoogle[style] iframe,
+  .adsbygoogle img,
+  .adsbygoogle canvas {
+    max-height: 40px !important;
     max-width: 100% !important;
-    max-height: 100% !important;
     object-fit: contain !important;
     transform-origin: top center;
+  }
+
+  .adsbygoogle:empty::before {
+    font-size: 10px !important;
   }
 }
 

@@ -1936,17 +1936,43 @@ document.addEventListener("drop", () => {
   window.clearDragClasses();
 });
 
+function enforceMobileAdCaps() {
+  if (window.innerWidth <= 768) {
+    document.querySelectorAll(".adsense-container, ins.adsbygoogle").forEach((el) => {
+      el.style.setProperty("max-height", "55px", "important");
+      el.style.setProperty("overflow", "hidden", "important");
+    });
+    document.querySelectorAll(".adsense-container iframe, ins.adsbygoogle iframe").forEach((iframe) => {
+      iframe.style.setProperty("max-height", "40px", "important");
+      iframe.style.setProperty("height", "40px", "important");
+    });
+  }
+}
+
 function refreshAdSense() {
   try {
+    enforceMobileAdCaps();
     const ads = document.querySelectorAll(".adsbygoogle");
     ads.forEach((ad) => {
       if (!ad.getAttribute("data-adsbygoogle-status") && ad.offsetParent !== null) {
         (window.adsbygoogle = window.adsbygoogle || []).push({});
       }
     });
+    setTimeout(enforceMobileAdCaps, 300);
+    setTimeout(enforceMobileAdCaps, 1000);
   } catch (e) {
     console.debug("AdSense push skipped:", e);
   }
+}
+
+if (typeof window !== "undefined") {
+  const adObserver = new MutationObserver(() => enforceMobileAdCaps());
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".adsense-container").forEach((container) => {
+      adObserver.observe(container, { childList: true, subtree: true, attributes: true });
+    });
+    enforceMobileAdCaps();
+  });
 }
 
 function showEditor() {

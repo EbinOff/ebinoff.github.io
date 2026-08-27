@@ -3501,7 +3501,7 @@ async function renderPdfGrid(pdfDoc) {
         item.innerHTML = `
             <input type="checkbox" class="select-box" data-page="${i - 1}">
             <div class="page-label">Page ${i}</div>
-            <div class="expand-icon" title="Open in Carousel"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+            <div class="expand-icon" title="Open in Carousel"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg></div>
         `;
 
         item.insertBefore(canvas, item.firstChild);
@@ -3621,7 +3621,7 @@ async function renderImageBatchGrid(batchThumbs) {
         item.innerHTML = `
             <input type="checkbox" class="select-box" data-page="${i}">
             <div class="page-label">Image ${i + 1}</div>
-            <div class="expand-icon" title="Open in Carousel"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+            <div class="expand-icon" title="Open in Carousel"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg></div>
         `;
         item.insertBefore(canvas, item.firstChild);
 

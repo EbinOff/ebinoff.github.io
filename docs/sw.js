@@ -1,4 +1,4 @@
-const APP_CACHE = "image-editor-shell-v4";
+const APP_CACHE = "image-editor-shell-v5";
 const scopeUrl = self.registration.scope;
 const OFFLINE_ASSETS = [
   "./",
