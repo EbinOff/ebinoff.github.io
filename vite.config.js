@@ -12,6 +12,8 @@ export default defineConfig({
       'all'
     ]
   },
+  
+  plugins: [],
 
   build: {
     // Output folder for GitHub Pages deployment
