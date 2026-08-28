@@ -1,3 +1,39 @@
+/**
+ * Centralized File Size Utility
+ * Ensures 100% consistency across all UI surfaces.
+ */
+const FileSizeManager = {
+    /**
+     * Formats raw bytes into a human-readable string.
+     * Single source of truth for formatting.
+     */
+    formatBytes(bytes) {
+        if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
+        if (bytes < 1024) return `${bytes} B`;
+        if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+        return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    },
+
+    /**
+     * Retrieves the current size of a thumb in bytes.
+     * Sourced exclusively from the thumb's dataset.
+     */
+    getThumbSizeBytes(thumb) {
+        if (!thumb) return 0;
+        return Number(thumb.dataset.fileSize || 0);
+    },
+
+    /**
+     * Gets the human-readable size of a thumb.
+     */
+    getThumbSizeText(thumb) {
+        const bytes = this.getThumbSizeBytes(thumb);
+        return bytes > 0 ? this.formatBytes(bytes) : "calculating...";
+    }
+};
+// Make it globally available for other scripts (like edit.js)
+window.FileSizeManager = FileSizeManager;
+
 import JSZip from "jszip";
 import { jsPDF } from "jspdf";
 
@@ -1185,10 +1221,7 @@ async function getThumbBlobForExport(thumb, mimeType = "image/png", quality = 1)
 }
 
 function formatBytes(bytes) {
-  if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+    return window.FileSizeManager ? window.FileSizeManager.formatBytes(bytes) : "0 B";
 }
 
 function getDisplayExtensionForThumb(thumb) {
